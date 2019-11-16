@@ -27,6 +27,5 @@ let eduSchema = new mongoose.Schema({
 
 let edu = mongoose.model('education',eduSchema,'education')
 console.log("Education Terbuat")
-
 module.exports = mongoose.model('education')
 
