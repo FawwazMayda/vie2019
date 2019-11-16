@@ -10,7 +10,14 @@ router.get("/",(req,resp)=>{
 })
 
 router.get("/:year",(req,res)=>{
-    res.send("year is "+req.params.year)
+    tahun = parseInt(req.params.year)
+    edu.find({tahun:tahun},(err,d)=>{
+        res.status(200).send(d)
+    })
+})
+
+router.get('/:year/:kota',(req,res)=>{
+    res.send("year is "+req.params.year+" kota is "+req.params.kota)
 })
 
 module.exports = router

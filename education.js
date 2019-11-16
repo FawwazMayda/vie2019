@@ -24,7 +24,8 @@ let eduSchema = new mongoose.Schema({
     "STRATA-III":Number
 })
 
-let edu = mongoose.model('education',eduSchema)
+let edu = mongoose.model('education',eduSchema,'education')
 console.log("Education Terbuat")
+
 module.exports = mongoose.model('education')
 
