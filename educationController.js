@@ -3,10 +3,30 @@ var router = express.Router()
 var edu = require('./education')
 var bodyParser = require('body-parser')
 var kota = require('./city')
+var derajat = require("./derajat")
 router.use(bodyParser.json())
 
 function cityPercentageOnyear(resultArr){
-    
+    let total = 0
+    var data = {}
+    resultArr.forEach(element => {
+        derajat.forEach(sekolah =>{
+            total += element[sekolah]
+        })
+    });
+    data["total"] = total
+    kota.forEach(nama_kota => {
+        data[nama_kota] = 0
+        resultArr.forEach(element => {
+            if(element.kota==nama_kota){
+                derajat.forEach(sekolah => {
+                    data[nama_kota] += element[sekolah]
+                })
+            }
+        })
+    })
+    return data
+
 }
 
 router.get("/",(req,resp)=>{
@@ -16,7 +36,7 @@ router.get("/",(req,resp)=>{
 router.get("/:year",(req,res)=>{
     tahun = parseInt(req.params.year)
     edu.find({tahun:tahun},(err,d)=>{
-        res.status(200).send(d)
+        res.status(200).send(cityPercentageOnyear(d))
     })
 })
 

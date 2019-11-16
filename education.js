@@ -18,8 +18,8 @@ let eduSchema = new mongoose.Schema({
     "SLTP/SEDERAJAT" : Number,
     "SLTA/SEDERAJAT" : Number,
     "DIPLOMA I/II" : Number,
-    "AKADEMI/DIPLOMA III": Number,
-    "DIPLOMA IV/STRATA-I":Number,
+    "AKADEMI/DIPLOMA III/SARJANA MUDA": Number,
+    "DIPLOMA IV/STRATA I":Number,
     "STRATA-II":Number,
     "STRATA-III":Number
 })
