@@ -15,8 +15,22 @@ function pieChartData(resultArr){
         })
     });
     kota.forEach(nama_kota => {
-        
+        let d = {}
+        let jumlah = 0
+        resultArr.forEach(element => {
+            if(element['kota']==nama_kota){
+                derajat.forEach(sekolah => {
+                    jumlah += element[sekolah]
+                })
+            }
+        })
+        d['categories']=nama_kota
+        d['measure']=jumlah / total
+        data.push(d)
     })
+
+    return data
+
 
 }
 
@@ -27,6 +41,8 @@ router.get('/',(req,res)=>{
 router.get('/:year',(req,res)=>{
     let tahun = req.params.year
     edu.find({tahun:tahun},(err,d)=>{
-        
+        res.status(200).send(pieChartData(d))
     })
 })
+
+module.exports = router
