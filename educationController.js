@@ -60,4 +60,28 @@ router.get('/:year/:kota',(req,res)=>{
     })
 })
 
+router.get("/query/:year",(req,res)=>{
+    let tahun = req.params.year
+    edu.find({tahun:tahun},(err,d)=>{
+        res.status(200).send(d)
+    })
+})
+
+router.get("/query/:year/:kota",(req,res)=>{
+    let tahun = req.params.year
+    let kota = req.params.kota
+    edu.find({tahun:tahun,kota:kota},(err,d){
+        res.status(200).send(d)
+    })
+})
+
+router.get("/query/:year/:kota/:gender",(req,res)=>{
+    let tahun = req.params.year
+    let kota = req.params.kota
+    let gender = req.params.gender
+    edu.find({tahun:tahun,kota:kota,gender:gender},(err,d){
+        res.status(200).send(d)
+    })
+})
+
 module.exports = router
