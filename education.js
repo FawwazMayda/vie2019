@@ -11,6 +11,7 @@ db.once('open', function() {
 
 let eduSchema = new mongoose.Schema({
     "kota" : String,
+    "gender":String,
     "tahun" : Number,
     "TIDAK/BLM SEKOLAH" : Number,
     "BELUM TAMAT SD/SEDERAJAT" : Number,

@@ -29,6 +29,18 @@ function cityPercentageOnyear(resultArr){
 
 }
 
+function citySekolahDist(resultArr){
+    let data  = {}
+    resultArr.forEach(element => {
+        let dataSekolah = {}
+        derajat.forEach(sekolah => {
+            dataSekolah[sekolah] = element[sekolah]
+        })
+        console.log(element['gender'])
+        data[element['gender']] = dataSekolah
+    })
+    return data
+}
 router.get("/",(req,resp)=>{
     resp.status(200).send({status:"OK"})
 })
@@ -43,9 +55,8 @@ router.get("/:year",(req,res)=>{
 router.get('/:year/:kota',(req,res)=>{
     let tahun = req.params.year
     let nama_kota = req.params.kota
-    res.send("year is "+req.params.year+" kota is "+req.params.kota)
     edu.find({tahun:tahun, kota:nama_kota},(err,d)=>{
-        res.status(200).send(d)
+        res.status(200).send(citySekolahDist(d))
     })
 })
 
