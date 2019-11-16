@@ -9,6 +9,7 @@ router.use(bodyParser.json())
 function pieChartData(resultArr){
     let total = 0
     let data = []
+    let cum = 0
     resultArr.forEach(element => {
         derajat.forEach(sekolah => {
             total += element[sekolah]
@@ -26,19 +27,19 @@ function pieChartData(resultArr){
         })
         d['categories']=nama_kota
         d['measure']=jumlah / total
+        cum += d['measure']
         data.push(d)
     })
-
+    console.log(data)
+    console.log(cum)
     return data
-
-
 }
 
-router.get('/',(req,res)=>{
-    res.status(200).send("OK")
+router.get("/",(req,res)=>{
+    res.status(200).send({status:"OK"})
 })
 
-router.get('/:year',(req,res)=>{
+router.get("/:year",(req,res)=>{
     let tahun = req.params.year
     edu.find({tahun:tahun},(err,d)=>{
         res.status(200).send(pieChartData(d))
