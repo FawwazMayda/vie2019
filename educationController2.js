@@ -114,6 +114,28 @@ function barChartData2(resultArr,jenjang){
     return data
 }
 
+function lineChartData(resultArr){
+    let data = []
+
+    tahun.forEach(y=> {
+        let d = {}
+        d['tahun']=String(y)
+        derajat.forEach(sekolah => {
+            let jumlah = 0
+            d['jenjang']=sekolah
+            resultArr.forEach(element=>{
+                if(element['tahun']==y){
+                    jumlah += element[sekolah]
+                }
+            })
+            d['count']=jumlah
+            console.log(d)
+            data.push({tahun:d['tahun'], jenjang:d['jenjang'], count:d['count']})
+        })
+    })
+    return data
+}
+
 
 router.get("/",(req,res)=>{
     res.status(200).send({status:"OK"})
@@ -148,6 +170,13 @@ router.get('/barchart/:kota/:jenjang',(req,res)=>{
     console.log(jenjang)
     edu.find({kota:kota},(err,d)=>{
         res.status(200).send(barChartData2(d,jenjang))
+    })
+})
+
+router.get("/linechart/:kota",(req,res)=>{
+    let kota = req.params.kota
+    edu.find({kota:kota},(err,d)=>{
+        res.status(200).send(lineChartData(d))
     })
 })
 
