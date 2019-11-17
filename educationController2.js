@@ -3,6 +3,7 @@ var router = express.Router()
 var edu =require('./education')
 var kota = require('./city')
 var derajat = require('./derajat')
+var tahun = require('./tahun')
 var bodyParser = require('body-parser')
 router.use(bodyParser.json())
 
@@ -84,6 +85,35 @@ function pieChartData2(resultArr){
     })
     return data
 }
+
+function barChartData2(resultArr,jenjang){
+    let data = []
+    let gender = ["L","P"]
+    let d = {}
+    tahun.forEach(y => {
+        d= {}
+        d['tahun'] = y
+       gender.forEach(g => {
+            d['gender']=g
+            let jumlah = 0
+            resultArr.forEach(element => {
+                if(element['tahun']==y && element['gender']==g){
+                    //console.log(jenjang)
+                    //console.log(element)
+                    //console.log(element[jenjang])
+                    jumlah += element[jenjang]
+                }
+            })
+            d['count']=jumlah
+            console.log(d)
+            data.push({tahun:d['tahun'],gender:d['gender'],count:d['count']})
+
+        })
+    })
+    return data
+}
+
+
 router.get("/",(req,res)=>{
     res.status(200).send({status:"OK"})
 })
@@ -109,5 +139,16 @@ router.get("/barchart/:year/",(req,res)=>{
         res.status(200).send(barChartData(d))
     })
 })
+
+router.get('/barchart/:kota/:jenjang',(req,res)=>{
+    //let tahun = req.params.year
+    let kota = req.params.kota
+    let jenjang = req.params.jenjang
+    console.log(jenjang)
+    edu.find({kota:kota},(err,d)=>{
+        res.status(200).send(barChartData2(d,jenjang))
+    })
+})
+
 
 module.exports = router
