@@ -26,6 +26,7 @@ function pieChartData(resultArr){
             }
         })
         d['categories']=nama_kota
+        d['count'] = jumlah
         d['measure']=jumlah / total
         cum += d['measure']
         data.push(d)
