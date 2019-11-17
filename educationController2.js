@@ -106,7 +106,8 @@ function barChartData2(resultArr,jenjang){
             })
             d['count']=jumlah
             console.log(d)
-            data.push({tahun:d['tahun'],gender:d['gender'],count:d['count']})
+            
+            data.push({tahun:String(d['tahun']),gender:d['gender'],count:d['count']})
 
         })
     })
