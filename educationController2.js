@@ -51,11 +51,36 @@ function barChartData(resultArr){
             d['measure']=jumlah
             console.log(d)
             data.push({group:d['group'], category:d['category'], measure:d['measure']})
+            //data.push(new Object(d))
         })
 
     })
     console.log("****************")
     console.log(data)
+    return data
+}
+
+function pieChartData2(resultArr){
+    let data = []
+    let jumlah = 0
+    resultArr.forEach(element => {
+        derajat.forEach(sekolah => {
+            jumlah += element[sekolah]
+        })
+    })
+    let d ={}
+    derajat.forEach(sekolah => {
+        d = {}
+        d['category']=sekolah
+        let count = 0
+        resultArr.forEach(element => {
+            count += element[sekolah]
+        })
+        d['count']=count
+        d['measure']=count/jumlah
+        console.log(d)
+        data.push(d)
+    })
     return data
 }
 router.get("/",(req,res)=>{
@@ -66,6 +91,14 @@ router.get("/piechart/:year",(req,res)=>{
     let tahun = req.params.year
     edu.find({tahun:tahun},(err,d)=>{
         res.status(200).send(pieChartData(d))
+    })
+})
+
+router.get("/piechart/:year/:kota",(req,res)=> {
+    let tahun = req.params.year
+    let kota = req.params.kota
+    edu.find({tahun:tahun,kota:kota},(err,d)=> {
+        res.status(200).send(pieChartData2(d))
     })
 })
 
