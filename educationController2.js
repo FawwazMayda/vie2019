@@ -128,9 +128,9 @@ function lineChartData(resultArr){
                     jumlah += element[sekolah]
                 }
             })
-            d['count']=jumlah
+            d['jumlah']=jumlah
             console.log(d)
-            data.push({tahun:d['tahun'], jenjang:d['jenjang'], count:d['count']})
+            data.push({tahun:d['tahun'], jenjang:d['jenjang'], jumlah:d['jumlah']})
         })
     })
     return data
